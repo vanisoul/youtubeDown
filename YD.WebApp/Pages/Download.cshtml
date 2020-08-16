@@ -1,0 +1,45 @@
+@page
+@using YD.Lib
+@using Newtonsoft.Json
+
+@{
+    ViewData["Title"] = "youtube下載";
+}
+
+<div class="text-center">
+    <h1 class="display-4">youtube開始下載</h1>
+</div>
+<hr/>
+<div id = "ing">
+開始下載
+</div>
+
+
+
+@section Scripts{
+<script language="javascript">
+    $(function(){
+        eval(postaddlistsong())
+    });
+
+    function postaddlistsong() {
+        var data = "data";
+        var url = "Download";
+        $.ajax({
+            url : url,
+            type : "POST",
+            contentType : "application/json",
+            data : JSON.stringify(data),
+            success : function(resp) {
+                if (resp.success){
+                    $("#ing").html( $("#ing").html() + "<br>" + resp.msg);
+                    eval(postaddlistsong())
+                    alert(resp.msg);
+                }else{
+                    alert(resp.msg);
+                }
+            }
+        });
+    }
+</script>
+}
