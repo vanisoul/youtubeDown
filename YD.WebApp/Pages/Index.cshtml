@@ -12,6 +12,12 @@
 <hr/>
 @foreach (var item in LoadSong.LoadList())
 {
-    @(item.name)
-    <hr/>
+    @if(item.name == "") {
+        @("")
+    }else{
+        @(item.name)
+        <hr/>
+    };
 }
+
+
