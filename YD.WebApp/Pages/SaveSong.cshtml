@@ -1,0 +1,53 @@
+@page
+@using YD.Lib
+@using Newtonsoft.Json
+
+@{
+    ViewData["Title"] = "youtube列表新增歌單";
+}
+
+<div class="text-center">
+    <h1 class="display-4">youtube歌曲網址新增歌單</h1>
+</div>
+<hr/>
+Youtube列表
+@for (int i = 0; i < 20; i++)
+{
+    <input type="text" name='url@(i)' id='url@(i)' style="width: 100%;"/>
+}
+<input type="submit" onclick="postaddlistsong()" value="新增這些歌">
+@{
+    var data = "";
+    for (int i = 0; i < 19; i++)
+    {
+        data += $" $(\"#url{i}\").val() + \",\" + ";
+    }
+    data += $" $(\"#url19\").val();";
+}
+
+@section Scripts{
+<script language="javascript">
+    function postaddlistsong() {
+        var data = @Html.Raw(data)
+
+        var url = "Url";
+        //if (re.exec( $("#url").val() )){
+            $.ajax({
+                url : url,
+                type : "POST",
+                contentType : "application/json",
+                data : JSON.stringify(data),
+                success : function(resp) {
+                    if (resp.success){
+                        alert("新增成功");
+                    }else{
+                        alert("新增失敗");
+                    }
+                }
+            });
+        //}else{
+        //    alert("請用有清單的網址");
+        //}
+    }
+</script>
+}
