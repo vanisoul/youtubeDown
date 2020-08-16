@@ -40,8 +40,11 @@ Youtube列表
                 success : function(resp) {
                     if (resp.success){
                         alert("新增成功");
+                        window.location.href="index";
+
                     }else{
                         alert("新增失敗");
+                        window.location.href="SaveSong";
                     }
                 }
             });

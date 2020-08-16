@@ -32,9 +32,9 @@ namespace Youtube_download.Controllers
                 }
                 else if (dalist[1].url != "")
                 {
-                    var urlold = dalist[1].url;
+                    var urlold = dalist[1].url.Split("&");
                     Regex rg = new Regex(@"v=(.*\b)");
-                    var inurl = $"https://www.yt-download.org/api/internal/mp3/{rg.Match(urlold).Groups[1].Value}";
+                    var inurl = $"https://www.yt-download.org/api/internal/mp3/{rg.Match(urlold[0]).Groups[1].Value}";
                     var web = new HtmlWeb();
                     web.PreRequest += OnPreRequest;
                     var doc = web.Load(inurl);
@@ -65,7 +65,7 @@ namespace Youtube_download.Controllers
         protected void downloadSong(string url, string name)
         {
             WebClient wc = new WebClient();
-            wc.DownloadFileAsync(new Uri(url), $".\\mp3\\{name}.mp3");
+            wc.DownloadFile(new Uri(url), $".\\mp3\\{name}.mp3");
         }
     }
 }
