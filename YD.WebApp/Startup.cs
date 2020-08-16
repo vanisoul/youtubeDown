@@ -25,14 +25,20 @@ namespace YD.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddControllers();
+            services.AddControllers(o =>
+            {
+                o.RespectBrowserAcceptHeader = true;
+            }).AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 #if !DEGUG
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 #endif
             if (env.IsDevelopment())
             {
