@@ -26,7 +26,11 @@ namespace Youtube_download.Controllers
             try
             {
                 var dalist = LoadSong.LoadList();
-                if (dalist[1].url != "")
+                if (dalist.Count == 1)
+                {
+                    return new { msg = "待載清單以抓完", success = false };
+                }
+                else if (dalist[1].url != "")
                 {
                     var urlold = dalist[1].url;
                     Regex rg = new Regex(@"v=(.*\b)");
@@ -37,7 +41,7 @@ namespace Youtube_download.Controllers
                     HtmlNodeCollection nameNodes = doc.DocumentNode.SelectNodes(@"//div[@class='text-center']");
                     Regex rgx = new Regex(@"href=.*(https://.*)class");
                     var url = rgx.Match(nameNodes[0].InnerHtml).Groups[1].Value.Replace("\"", "");
-
+                    downloadSong(url, dalist[1].name);
                     msg = $"{dalist[1].name} 下載成功";
                     dalist.RemoveAt(1);
                     WriteSong.WriteList(dalist);
@@ -45,22 +49,23 @@ namespace Youtube_download.Controllers
                 }
                 else
                 {
-                    msg = "url空白";
+                    dalist.RemoveAt(1);
+                    WriteSong.WriteList(dalist);
                 }
 
             }
             catch (Exception e)
             {
-                return new { msg = e, success = false };
+                return new { msg = e, success = true };
             }
             return new { msg = msg, success = true };
 
         }
 
-        protected void downloadSong(string filename, Stream FileStream)
+        protected void downloadSong(string url, string name)
         {
             WebClient wc = new WebClient();
-            wc.DownloadFile("http://blog.darkthread.net/images/darkthreadbanner.gif", "b:\\darkthread.gif");
+            wc.DownloadFileAsync(new Uri(url), $".\\mp3\\{name}.mp3");
         }
     }
 }

@@ -34,9 +34,9 @@
                 if (resp.success){
                     $("#ing").html( $("#ing").html() + "<br>" + resp.msg);
                     eval(postaddlistsong())
-                    alert(resp.msg);
+                    //alert(resp.msg);
                 }else{
-                    alert(resp.msg);
+                    $("#ing").html( $("#ing").html() + "<br>" + resp.msg);
                 }
             }
         });
