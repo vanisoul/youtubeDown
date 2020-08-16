@@ -13,7 +13,7 @@ namespace YD.Lib
 
             using var inputFile = new StreamReader(Path.Combine("WriteSong"));
             var instr = inputFile.ReadToEndAsync().Result;
-            var result = (instr != "") ? JsonConvert.DeserializeObject<List<Data>>(instr) : new List<Data>() { new Data { url = "", name = "沒有待下載歌單" } };
+            var result = JsonConvert.DeserializeObject<List<Data>>(instr);
             // dalist.Add(new Data() { url = "Craig1", name = "Playstead1" });
             // dalist.Add(new Data() { url = "Craig2", name = "Playstead2" });
             // dalist.Add(new Data() { url = "Craig3", name = "Playstead3" });
