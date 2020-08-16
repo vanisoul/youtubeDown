@@ -38,8 +38,7 @@ namespace Youtube_download.Controllers
                         }
                     }
                 }
-                using StreamWriter outputFile = new StreamWriter(Path.Combine("WriteSong"));
-                outputFile.WriteLine(JsonConvert.SerializeObject(dalist));
+                WriteSong.WriteList(dalist);
             }
             catch
             {
