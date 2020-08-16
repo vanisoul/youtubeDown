@@ -1,10 +1,17 @@
 ﻿@page
-@model IndexModel
+@using YD.Lib
+@using Newtonsoft.Json
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "待載清單";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">待載清單</h1>
 </div>
+<hr/>
+@foreach (var item in LoadSong.LoadList())
+{
+    @(item.name)
+    <hr/>
+}
