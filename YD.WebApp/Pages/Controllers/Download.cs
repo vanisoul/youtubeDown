@@ -22,10 +22,10 @@ namespace Youtube_download.Controllers
         [HttpPost]
         public object Download()
         {
+            var dalist = LoadSong.LoadList();
             string msg = "";
             try
             {
-                var dalist = LoadSong.LoadList();
                 if (dalist.Count == 1)
                 {
                     return new { msg = "待載清單以抓完", success = false };
@@ -56,7 +56,9 @@ namespace Youtube_download.Controllers
             }
             catch (Exception e)
             {
-                return new { msg = e, success = true };
+                dalist.RemoveAt(1);
+                WriteSong.WriteList(dalist);
+                return new { msg = "抓取錯誤 跳過", success = true };
             }
             return new { msg = msg, success = true };
 
@@ -65,7 +67,7 @@ namespace Youtube_download.Controllers
         protected void downloadSong(string url, string name)
         {
             WebClient wc = new WebClient();
-            wc.DownloadFile(new Uri(url), $".\\mp3\\{name}.mp3");
+            wc.DownloadFile(new Uri(url), $".\\..\\..\\Downloadmp3\\{name}.mp3");
         }
     }
 }
