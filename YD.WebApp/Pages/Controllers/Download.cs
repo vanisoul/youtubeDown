@@ -58,7 +58,7 @@ namespace Youtube_download.Controllers
             {
                 dalist.RemoveAt(1);
                 WriteSong.WriteList(dalist);
-                return new { msg = "抓取錯誤 跳過", success = true };
+                return new { msg = $"{dalist[1].name} 抓取錯誤 跳過", success = true };
             }
             return new { msg = msg, success = true };
 
