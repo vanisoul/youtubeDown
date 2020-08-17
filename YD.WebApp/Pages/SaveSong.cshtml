@@ -7,10 +7,10 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">youtube歌曲網址新增歌單</h1>
+    <h1 class="display-4">youtube歌曲網址新增歌單，會自動排除重復的</h1>
 </div>
 <hr/>
-Youtube列表
+Youtube列表 每一格打網址 打完確認(舉例：https://www.youtube.com/watch?v=s-CcFyyPJiY)
 @for (int i = 0; i < 20; i++)
 {
     <input type="text" name='url@(i)' id='url@(i)' style="width: 100%;"/>
@@ -39,11 +39,11 @@ Youtube列表
                 data : JSON.stringify(data),
                 success : function(resp) {
                     if (resp.success){
-                        alert("新增成功");
+                        alert("歌單新增成功");
                         window.location.href="index";
 
                     }else{
-                        alert("新增失敗");
+                        alert("歌單新增失敗");
                         window.location.href="SaveSong";
                     }
                 }
@@ -52,5 +52,11 @@ Youtube列表
         //    alert("請用有清單的網址");
         //}
     }
+
+$(document).keyup(function(event) {
+    if (event.keyCode == 13) {
+        postaddlistsong()
+    }
+});
 </script>
 }
