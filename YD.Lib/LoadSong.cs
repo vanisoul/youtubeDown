@@ -16,6 +16,17 @@ namespace YD.Lib
             var result = JsonConvert.DeserializeObject<List<Data>>(instr);
             return result;
         }
+        public static String LoagFirstSong()
+        {
+            var ListData = LoadList();
+            var resultFirst = "";
+            try
+            {
+                resultFirst = ListData[1].name;
+            }
+            catch (ArgumentOutOfRangeException e) { }
+            return resultFirst;
+        }
     }
 
 }
