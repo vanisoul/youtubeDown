@@ -10,7 +10,7 @@ namespace YD.Lib
         public static void WriteList(List<Data> dalist)
         {
             using StreamWriter outputFile = new StreamWriter(Path.Combine("WriteSong"));
-            outputFile.WriteLine(JsonConvert.SerializeObject(dalist));
+            outputFile.WriteLineAsync(JsonConvert.SerializeObject(dalist));
         }
     }
 }
