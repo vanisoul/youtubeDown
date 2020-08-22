@@ -14,15 +14,14 @@ namespace Youtube_download.Controllers
     public class UrlController : ControllerBase
     {
         [HttpPost]
-        public object SaveTotxt(dynamic json)
+        public object SaveTotxt(IEnumerable<songUrl> objectUrlList)
         {
             try
             {
                 var dalist = LoadSong.LoadList();
-                var str = $"{json}";
-                var strlist = str.Split(",");
-                foreach (var url in strlist)
+                foreach (var objectUrl in objectUrlList)
                 {
+                    var url = objectUrl.value;
                     if (url != "")
                     {
                         //得到歌名
@@ -35,9 +34,9 @@ namespace Youtube_download.Controllers
                         //判斷不重復歌單
                         Data newData = new Data() { url = url, name = name };
                         bool repeat = false;
-                        dalist.ForEach(x =>
+                        dalist.ForEach(oldData =>
                         {
-                            if (JsonConvert.SerializeObject(newData) == JsonConvert.SerializeObject(x))
+                            if (JsonConvert.SerializeObject(newData) == JsonConvert.SerializeObject(oldData))
                             {
                                 repeat = true;
                             }
@@ -57,5 +56,10 @@ namespace Youtube_download.Controllers
             return new { success = true };
 
         }
+
+    }
+    public class songUrl
+    {
+        public string value { get; set; }
     }
 }

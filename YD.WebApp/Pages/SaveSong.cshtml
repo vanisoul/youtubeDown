@@ -11,46 +11,36 @@
 </div>
 <hr/>
 Youtube列表 每一格打網址 打完確認(舉例：https://www.youtube.com/watch?v=s-CcFyyPJiY)
+<form id="song" name="song">
 @for (int i = 0; i < 20; i++)
 {
     <input type="text" name='url@(i)' id='url@(i)' style="width: 100%;"/>
 }
-<input type="submit" onclick="postaddlistsong()" value="新增這些歌">
-@{
-    var data = "";
-    for (int i = 0; i < 19; i++)
-    {
-        data += $" $(\"#url{i}\").val() + \",\" + ";
-    }
-    data += $" $(\"#url19\").val();";
-}
+<input type="button" onclick="postaddlistsong()" value="新增這些歌">
+</form>
+
 
 @section Scripts{
 <script language="javascript">
     function postaddlistsong() {
-        var data = @Html.Raw(data)
-
+        var data = $("#song").serializeArray();
         var url = "Url";
-        //if (re.exec( $("#url").val() )){
-            $.ajax({
-                url : url,
-                type : "POST",
-                contentType : "application/json",
-                data : JSON.stringify(data),
-                success : function(resp) {
-                    if (resp.success){
-                        alert("歌單新增成功");
-                        window.location.href="index";
+        $.ajax({
+            url : url,
+            type : "POST",
+            contentType : "application/json",
+            data : JSON.stringify(data),
+            success : function(resp) {
+                if (resp.success){
+                    alert("歌單新增成功");
+                    window.location.href="index";
 
-                    }else{
-                        alert("歌單新增失敗");
-                        window.location.href="SaveSong";
-                    }
+                }else{
+                    alert("歌單新增失敗");
+                    window.location.href="SaveSong";
                 }
-            });
-        //}else{
-        //    alert("請用有清單的網址");
-        //}
+            }
+        });
     }
 
     $(document).keyup(function(event) {
