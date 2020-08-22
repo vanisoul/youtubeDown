@@ -23,9 +23,12 @@ namespace YD.Lib
             try
             {
                 resultFirst = ListData[1].name;
+                return resultFirst;
             }
-            catch (ArgumentOutOfRangeException e) { }
-            return resultFirst;
+            catch //(ArgumentOutOfRangeException e)
+            {
+                return "";
+            }
         }
     }
 
