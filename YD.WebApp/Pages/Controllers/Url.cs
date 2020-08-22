@@ -28,11 +28,12 @@ namespace Youtube_download.Controllers
                         var web = new HtmlWeb();
                         var doc = web.Load(url);
                         var resp = doc.Text;
-                        Regex rg = new Regex(@"<title>(.*)</title>");
-                        var name = rg.Match(resp).Groups[1].Value.Replace(" - YouTube", "");
+                        Regex rg1 = new Regex(@"<title>(.*)</title>");
+                        var name = rg1.Match(resp).Groups[1].Value.Replace(" - YouTube", "");
 
+                        Regex rg2 = new Regex(@"v=([\w\-]*)\b");
+                        Data newData = new Data() { url = rg2.Match(url).Groups[1].Value, name = name };
                         //判斷不重復歌單
-                        Data newData = new Data() { url = url, name = name };
                         bool repeat = false;
                         dalist.ForEach(oldData =>
                         {
