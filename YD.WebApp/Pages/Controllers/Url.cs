@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +13,15 @@ namespace Youtube_download.Controllers
     public class UrlController : ControllerBase
     {
         [HttpPost]
-        public object SaveTotxt(IEnumerable<songUrl> objectUrlList)
+        public object SaveTotxt(List<Data> joinDataList)
         {
             try
             {
-                var dalist = LoadSong.LoadList();
-                foreach (var objectUrl in objectUrlList)
+                //var newDataList = new List<Data>();
+                var oldDataList = LoadSong.LoadList();
+                joinDataList.ForEach(forDataList =>
                 {
-                    var url = objectUrl.value;
+                    var url = forDataList.value;
                     if (url != "")
                     {
                         //得到歌名
@@ -30,12 +30,12 @@ namespace Youtube_download.Controllers
                         var resp = doc.Text;
                         Regex rg1 = new Regex(@"<title>(.*)</title>");
                         var name = rg1.Match(resp).Groups[1].Value.Replace(" - YouTube", "");
-
                         Regex rg2 = new Regex(@"v=([\w\-]*)\b");
-                        Data newData = new Data() { url = rg2.Match(url).Groups[1].Value, name = name };
+
+                        var newData = new Data() { value = rg2.Match(url).Groups[1].Value, name = name };
                         //判斷不重復歌單
                         bool repeat = false;
-                        dalist.ForEach(oldData =>
+                        oldDataList.ForEach(oldData =>
                         {
                             if (JsonConvert.SerializeObject(newData) == JsonConvert.SerializeObject(oldData))
                             {
@@ -44,11 +44,12 @@ namespace Youtube_download.Controllers
                         });
                         if (!repeat)
                         {
-                            dalist.Add(newData);
+                            oldDataList.Add(newData);
                         }
                     }
-                }
-                WriteSong.WriteList(dalist);
+                });
+
+                WriteSong.WriteList(oldDataList);
             }
             catch
             {
@@ -58,9 +59,5 @@ namespace Youtube_download.Controllers
 
         }
 
-    }
-    public class songUrl
-    {
-        public string value { get; set; }
     }
 }

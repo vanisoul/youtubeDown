@@ -30,9 +30,9 @@ namespace Youtube_download.Controllers
                 {
                     return new { msg = "待載清單以抓完", success = false };
                 }
-                else if (dalist[1].url != "")
+                else if (dalist[1].value != "")
                 {
-                    var inurl = $"https://www.yt-download.org/api/internal/mp3/{dalist[1].url}";
+                    var inurl = $"https://www.yt-download.org/api/internal/mp3/{dalist[1].value}";
                     var web = new HtmlWeb();
                     web.PreRequest += OnPreRequest;
                     var doc = web.Load(inurl);
