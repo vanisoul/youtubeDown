@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using YD.Lib;
 
 namespace Youtube_download.Controllers
