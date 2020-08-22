@@ -10,7 +10,7 @@ using YD.Lib;
 
 namespace Youtube_download.Controllers
 {
-    [Route("Download")]
+    [Route("Download/")]
     [ApiController]
     public class DownloadController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace Youtube_download.Controllers
             req.Referer = "https://www.yt-download.org"; //how to know the referrer address here?
             return true;
         }
-        [HttpPost]
+        [HttpPost("")]
         public object Download()
         {
             var dalist = LoadSong.LoadList();
@@ -32,9 +32,7 @@ namespace Youtube_download.Controllers
                 }
                 else if (dalist[1].url != "")
                 {
-                    var urlold = dalist[1].url.Split("&");
-                    Regex rg = new Regex(@"v=(.*\b)");
-                    var inurl = $"https://www.yt-download.org/api/internal/mp3/{rg.Match(urlold[0]).Groups[1].Value}";
+                    var inurl = $"https://www.yt-download.org/api/internal/mp3/{dalist[1].url}";
                     var web = new HtmlWeb();
                     web.PreRequest += OnPreRequest;
                     var doc = web.Load(inurl);
@@ -63,6 +61,23 @@ namespace Youtube_download.Controllers
             return new { msg = msg, success = true };
 
         }
+
+        [HttpPost("firstSong")]
+        public Object LoagFirstSong()
+        {
+            var ListData = LoadSong.LoadList();
+            var resultFirst = "";
+            try
+            {
+                resultFirst = ListData[1].name;
+                return new { success = true, msg = resultFirst };
+            }
+            catch //(ArgumentOutOfRangeException e)
+            {
+                return new { success = false, msg = "" };
+            }
+        }
+
 
         protected void downloadSong(string url, string name)
         {

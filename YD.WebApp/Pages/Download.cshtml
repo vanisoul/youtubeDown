@@ -21,10 +21,27 @@
         eval(postaddlistsong())
     });
 
+
+    function viewFirstSong() {
+        var url = "Download/firstSong";
+        $.ajax({
+            url : url,
+            type : "POST",
+            contentType : "application/json",
+            success : function(resp) {
+                if (resp.success){
+                    $("#ing").html( $("#ing").html() + "<br> " + resp.msg + "  下載中");
+                }else{
+                    $("#ing").html( $("#ing").html() + "<br>   無歌單");
+                }
+            }
+        });
+    }
+
     function postaddlistsong() {
         var data = "data";
         var url = "Download";
-        $("#ing").html( $("#ing").html() + "<br>" + @Html.Raw(LoadSong.LoagFirstSong()) + " 下載中");
+        viewFirstSong();
         $.ajax({
             url : url,
             type : "POST",
