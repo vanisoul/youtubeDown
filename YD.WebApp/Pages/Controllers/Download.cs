@@ -79,12 +79,12 @@ namespace Youtube_download.Controllers
         protected void downloadSong(string url, string name)
         {
             WebClient wc = new WebClient();
-#if DEBUG
-            wc.DownloadFile(new Uri(url), $".\\Downloadmp3\\{name}.mp3");
-#else
+
+            //DEBUG
+            //wc.DownloadFile(new Uri(url), $".\\Downloadmp3\\{name}.mp3");
             //EXE
             wc.DownloadFile(new Uri(url), $".\\..\\..\\Downloadmp3\\{name}.mp3");
-#endif
+
         }
     }
 }
