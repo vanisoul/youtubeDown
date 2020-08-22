@@ -54,7 +54,7 @@ namespace Youtube_download.Controllers
                 }
 
             }
-            catch (Exception e)
+            catch //(Exception e)
             {
                 dalist.RemoveAt(1);
                 WriteSong.WriteList(dalist);
@@ -67,7 +67,12 @@ namespace Youtube_download.Controllers
         protected void downloadSong(string url, string name)
         {
             WebClient wc = new WebClient();
+#if DEBUG
+            wc.DownloadFile(new Uri(url), $".\\Downloadmp3\\{name}.mp3");
+#else
+            //EXE
             wc.DownloadFile(new Uri(url), $".\\..\\..\\Downloadmp3\\{name}.mp3");
+#endif
         }
     }
 }
