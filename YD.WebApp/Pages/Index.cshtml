@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "待載清單";
+    var fre = 1 ;
 }
 
 <div class="text-center">
@@ -14,7 +15,7 @@
     @if(item.name == "") {
         @("")
     }else{
-        @(item.name)
+        @($"{fre++}. {item.name}")
         <hr/>
     };
 }

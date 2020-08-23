@@ -10,11 +10,11 @@
     <h1 class="display-4">youtube歌曲網址新增歌單，會自動排除重復的</h1>
 </div>
 <hr/>
-Youtube列表 每一格打網址 打完確認(舉例：https://www.youtube.com/watch?v=s-CcFyyPJiY)
+Youtube列表 輸入網址 (舉例：https://www.youtube.com/watch?v=s-CcFyyPJiY) 最少只要有輸入 v=s-CcFyyPJiY 即可
 <form id="song" name="song">
 @for (int i = 0; i < 20; i++)
 {
-    <input type="text" name='url@(i)' id='url@(i)' style="width: 100%;"/>
+    @($"{String.Format("{0:00}", i + 1)}. ")<input type="text" name='url@(i)' id='url@(i)' style="width: 90%;"/><br />
 }
 <input type="button" onclick="postaddlistsong()" value="新增這些歌">
 </form>
