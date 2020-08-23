@@ -33,7 +33,7 @@ namespace Youtube_download.Controllers
                             var val = rg2.Match(url).Groups[1].Value;
                             //得到歌名
                             var web = new HtmlWeb();
-                            var doc = await web.LoadFromWebAsync(url);
+                            var doc = await web.LoadFromWebAsync($"https://www.youtube.com/watch?v={val}");
                             var resp = doc.Text;
                             Regex rg1 = new Regex(@"<title>(.*)</title>");
                             var name = rg1.Match(resp).Groups[1].Value.Replace(" - YouTube", "");
